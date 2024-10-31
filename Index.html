@@ -1,0 +1,169 @@
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Creepster&family=Nosifer&family=Special+Elite&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <style>
+        .card {
+            perspective: 1500px;
+            height: 600px;
+        }
+
+        .card-inner {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            text-align: center;
+            transition: transform 0.8s;
+            transform-style: preserve-3d;
+            cursor: pointer;
+        }
+
+        .card.flipped .card-inner {
+            transform: rotateY(180deg);
+        }
+
+        .card-front,
+        .card-back {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            backface-visibility: hidden;
+        }
+
+        .card-back {
+            transform: rotateY(180deg);
+        }
+
+        @keyframes drip {
+            0% { transform: translateY(0); opacity: 1; }
+            100% { transform: translateY(20px); opacity: 0; }
+        }
+
+        .blood-drip {
+            animation: drip 2s infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-20px); }
+        }
+
+        .floating {
+            animation: float 3s ease-in-out infinite;
+        }
+
+        .font-creepy { font-family: 'Creepster', cursive; }
+        .font-bloody { font-family: 'Nosifer', cursive; }
+        .font-typewriter { font-family: 'Special Elite', cursive; }
+
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            25% { transform: translateX(-5px); }
+            75% { transform: translateX(5px); }
+        }
+
+        .shake-hover:hover {
+            animation: shake 0.5s ease-in-out;
+        }
+    </style>
+</head>
+<body class="bg-black min-h-screen flex items-center justify-center p-4">
+    <div class="max-w-lg w-full mx-auto">
+        <div class="card" onclick="this.classList.toggle('flipped')">
+            <div class="card-inner">
+                <!-- Front of Card -->
+                <div class="card-front">
+                    <div class="bg-orange-900 p-8 rounded-lg shadow-2xl border-4 border-orange-700 h-full shake-hover">
+                        <div class="blood-drip absolute -top-4 left-1/2 transform -translate-x-1/2">
+                            <i class="fas fa-tint text-red-600 text-4xl"></i>
+                        </div>
+                        <h2 class="font-bloody text-orange-500 text-center text-3xl mb-4 tracking-wider">IEC CLUB</h2>
+                        <div class="text-center">
+                            <i class="fas fa-skull text-gray-300 text-5xl mb-4 floating"></i>
+                        </div>
+                        <p class="font-creepy text-orange-400 text-center text-xl mb-4">Click to open if you dare...</p>
+                        <div class="text-center">
+                            <i class="fas fa-hand-pointer text-orange-400 text-2xl animate-bounce"></i>
+                        </div>
+                        <div class="mt-4 flex justify-center space-x-4">
+                            <i class="fas fa-spider text-orange-400 text-2xl floating"></i>
+                            <i class="fas fa-ghost text-orange-400 text-2xl floating"></i>
+                            <i class="fas fa-bat text-orange-400 text-2xl floating"></i>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Back of Card -->
+                <div class="card-back">
+                    <div class="bg-orange-950 p-8 rounded-lg shadow-2xl border-4 border-orange-700 h-full">
+                        <div class="bg-orange-100 p-6 rounded-lg transform rotate-1">
+                            <h1 class="font-bloody text-red-600 text-center text-2xl mb-6">Spooky Greetings!</h1>
+                            <div class="font-typewriter text-gray-800 space-y-4">
+                                <p class="text-center">Dear Friend,</p>
+                                <p class="text-center">On this haunted day, we wish you</p>
+                                <p class="text-center text-xl font-bold">A Frightfully Fantastic Day!</p>
+                                <div class="my-4 text-center">
+                                    <i class="fas fa-magic text-gray-800 text-3xl floating"></i>
+                                </div>
+                                <div class="space-y-2 text-center">
+                                    <p>May your day be filled with</p>
+                                    <p>Sweet treats and spooky delights</p>
+                                    <p>Laughter and joy that haunts the night</p>
+                                </div>
+                                <div class="mt-6 text-center text-sm italic">
+                                    <p>Remember to smile today</p>
+                                    <p>Even if you're wearing a scary mask!</p>
+                                </div>
+                            </div>
+                            <div class="mt-6 flex justify-center space-x-4">
+                                <i class="fas fa-candy-cane text-gray-700 text-2xl floating"></i>
+                                <i class="fas fa-heart text-gray-700 text-2xl floating"></i>
+                                <i class="fas fa-star text-gray-700 text-2xl floating"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Blood Drips -->
+        <div class="fixed bottom-0 left-0 w-full flex justify-around pointer-events-none">
+            <i class="fas fa-tint text-red-600 text-2xl blood-drip"></i>
+            <i class="fas fa-tint text-red-600 text-2xl blood-drip" style="animation-delay: 0.5s"></i>
+            <i class="fas fa-tint text-red-600 text-2xl blood-drip" style="animation-delay: 1s"></i>
+            <i class="fas fa-tint text-red-600 text-2xl blood-drip" style="animation-delay: 1.5s"></i>
+        </div>
+    </div>
+
+    <script>
+        // Add blood splatter effect on click
+        document.querySelector('.card').addEventListener('click', function(e) {
+            const splatter = document.createElement('div');
+            splatter.style.position = 'fixed';
+            splatter.style.width = '20px';
+            splatter.style.height = '20px';
+            splatter.style.background = '#8B0000';
+            splatter.style.borderRadius = '50%';
+            splatter.style.left = e.clientX + 'px';
+            splatter.style.top = e.clientY + 'px';
+            splatter.style.filter = 'blur(2px)';
+            splatter.style.opacity = '0.7';
+            splatter.style.transition = 'all 1s';
+            
+            document.body.appendChild(splatter);
+            
+            setTimeout(() => {
+                splatter.style.transform = 'scale(2)';
+                splatter.style.opacity = '0';
+            }, 50);
+            
+            setTimeout(() => {
+                splatter.remove();
+            }, 1000);
+        });
+    </script>
+</body>
+</html>
